@@ -2,6 +2,7 @@
 # TODO: ListCreateAPIView, RetrieveUpdateAPIView, CreateAPIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView, CreateAPIView, UpdateAPIView
 
 from .models import Sensor
 from .serializers import SensorSerializer
@@ -16,3 +17,13 @@ def sensor_data(request):
         return Response(ser.data)
     if request.method == 'POST':
         return Response({'status': 'OK'})
+
+
+class SensorsView(ListCreateAPIView):
+    queryset = Sensor.objects.all()
+    serializer_class = SensorSerializer
+
+class SensorView(RetrieveAPIView):
+    queryset = Sensor.objects.all()
+    serializer_class = SensorSerializer
+
