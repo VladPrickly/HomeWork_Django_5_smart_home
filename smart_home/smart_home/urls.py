@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from measurement.views import SensorsView, SensorView#, MeasurementsView, UpdateSensor
+from measurement.views import SensorsView, SensorView, MeasurementsView, UpdateSensor
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('measurement.urls')),  # подключаем маршруты из приложения measurement
-    path('sensors/', SensorsView.as_view()),
-    path('sensor/<pk>/', SensorView.as_view()),
+    path('sensors/', SensorsView.as_view()), # краткая инф по ВСЕМ датчикам + можно добавить новый датчик, указав ИМЯ и ОПИСАНИЕ
+    path('sensor/<pk>/', SensorView.as_view()), # полная инф по выбранному датчику (вместе с измерениями)
+    path('measurements/', MeasurementsView.as_view()),  # добавление нового измерения с указанием ID ДАТЧИКА и ТЕМПЕРАТ.
+    path('sensors/<pk>/', UpdateSensor.as_view()),  # изменение ОПИСАНИЯ датчика
 ]
